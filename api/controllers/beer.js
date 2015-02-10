@@ -7,6 +7,7 @@ module.exports = {
     beer.name = req.body.name;
     beer.type = req.body.type;
     beer.quality = req.body.quality;
+    beer.userId = req.user._id;
 
     beer.save(function(err, savedBeer) {
       if (err) return res.send(err);
@@ -16,7 +17,7 @@ module.exports = {
   },
 
   getBeers: function(req, res) {
-    Beer.find(function(err, beers) {
+    Beer.find({ userId: req.user._id }, function(err, beers) {
       if (err) return res.send(err);
 
       res.json(beers);
@@ -24,14 +25,14 @@ module.exports = {
   },
 
   getBeer: function(req, res) {
-    Beer.findById(req.params.beer_id, function(err, beer) {
+    Beer.find({ userId: req.user._id, _id: req.params.beer_id }, function(err, beer) {
       if (err) return res.send(err);
       res.json(beer);
     });
   },
 
   putBeer: function(req, res) {
-    Beer.findById(req.params.beer_id, function(err, beer) {
+    Beer.find({ userId: req.user._id, _id: req.params.beer_id }, function(err, beer) {
       if (err) return res.send(err);
 
       beer.quality = req.body.quality;
@@ -44,7 +45,7 @@ module.exports = {
   },
 
   deleteBeer: function(req, res) {
-    Beer.findByIdAndRemove(req.params.beer_id, function(err, deletedBeer) {
+    Beer.remove({userId: req.user._id, _id: req.params.beer_id }, function(err, deletedBeer) {
       if (err) res.send(err);
 
       res.json(deletedBeer);

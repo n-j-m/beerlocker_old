@@ -11,6 +11,6 @@ usersRouter
   .post(UserController.postUsers);
 
 var userRouter = router.route('/users/:user_id');
-userRouter.get(UserController.getUser);
+userRouter.get(AuthController.isAuthenticated, UserController.getUser);
 
 module.exports = router;

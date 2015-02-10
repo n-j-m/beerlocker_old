@@ -10,8 +10,7 @@ var UserSchema = mongoose.Schema({
   password: {
     type: String,
     required: true
-  },
-  token: String
+  }
 });
 
 // Execute before each user.save() call

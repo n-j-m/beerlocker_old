@@ -5,8 +5,7 @@ module.exports = {
   postUsers: function(req, res) {
     var user = new User({
       username: req.body.username,
-      password: req.body.password,
-      token: uuid.v4()
+      password: req.body.password
     });
 
     user.save(function(err, savedUser) {
@@ -16,14 +15,14 @@ module.exports = {
   },
 
   getUsers: function(req, res) {
-    var q = User.find().select('-token').exec(function(err, users) {
+    User.find(function(err, users) {
       if (err) return res.send(err);
       res.json(users);
     });
   },
 
   getUser: function(req, res) {
-    User.findById(req.params.user_id, '-token', function(err, user) {
+    User.findById(req.params.user_id, function(err, user) {
       if (err) return res.send(err);
       res.json(user);
     });
