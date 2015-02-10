@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var app = require('../api/server');
+
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  console.info('beerlocker started at http://localhost:' + app.get('port'));
+});
